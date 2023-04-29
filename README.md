@@ -18,8 +18,8 @@ This can be used to compare your wanted sets against sets retiring sets from sit
 This will return a response with the properties 
 SetNumber, Name, Price 
 
-#To convert many 
+# To convert many 
 Copy steps 1 through 6 and paste each content as an array object into the request body of 'convert-many' endpoint
 
-#To get CSV
+# To get CSV
 Send a true value for csv and the endpoint will return a csv file.
