@@ -16,13 +16,16 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGet("/", () => "Hello World!");
-
-app.MapPost("/convert", ([FromBody]WishlistRequest wishlist, IWishlistConverter service) =>
+app.MapPost("/convert", (
+    [FromBody] WishlistRequest wishlist,
+    [FromQuery] bool csv,
+    IWishlistConverter service,
+    IWishlistToCsvConverter csvConverter) =>
 {
     var converted = service.Convert(wishlist);
-
-    return Results.Ok(converted);
+    if (!csv) return Results.Ok(converted);
+    var valueAsCsv = csvConverter.Convert(converted);
+    return Results.Stream(valueAsCsv, "text/csv", $"LegoWishList-{DateTime.UtcNow:s}");
 });
 
 
